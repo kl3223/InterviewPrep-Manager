@@ -1,0 +1,35 @@
+{
+  "name": "interviewprep-manager-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "electron:dev": "electron . --dev",
+    "electron:build": "vite build && electron-builder"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^5.6.1",
+    "@types/react-router-dom": "^5.3.3",
+    "@uiw/react-markdown-editor": "^6.1.4",
+    "antd": "^5.29.1",
+    "axios": "^1.13.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-markdown": "^9.1.0",
+    "react-router-dom": "^6.30.2"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "@types/react": "^18.3.27",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^4.7.0",
+    "electron": "^39.2.6",
+    "electron-builder": "^24.9.1",
+    "typescript": "^5.9.3",
+    "vite": "^5.4.21"
+  },
+  "main": "electron/main.cjs"
+}

@@ -4,7 +4,7 @@
 
 ## 📋 项目概述
 
-InterviewPrep Manager是一款专为技术面试准备设计的桌面应用，帮助用户系统化地管理和复习面试相关的知识和题目。
+InterviewPrep Manager是一款专为技术面试准备设计的桌面应用，帮助自己系统化地管理和复习面试相关的知识和题目。
 
 ## 🛠️ 技术栈
 
@@ -191,14 +191,10 @@ npm run electron:build
 
 欢迎提交Issue和Pull Request来帮助改进这个项目。
 
-## 📄 许可证
-
-MIT License
-
 ## 📞 联系方式
 
 如有问题或建议，请通过以下方式联系：
-- 项目地址：<项目GitHub地址>
+- 项目地址：[<项目GitHub地址>](https://github.com/kl3223/InterviewPrep-Manager)
 
 ## 📝 更新日志
 
