@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .database import engine, Base
-from .routes import interview_question_router, knowledge_point_router, coding_question_router, dashboard_router
+from backend.database import engine, Base
+from backend.routes import interview_question_router, knowledge_point_router, coding_question_router, dashboard_router
 
 # 创建数据库表
 Base.metadata.create_all(bind=engine)

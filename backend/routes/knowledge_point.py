@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from typing import List, Optional
-from ..database import get_db
-from ..models import KnowledgePoint
-from ..schemas import KnowledgePoint as KnowledgePointSchema, KnowledgePointCreate, KnowledgePointUpdate
+from backend.database import get_db
+from backend.models import KnowledgePoint
+from backend.schemas import KnowledgePoint as KnowledgePointSchema, KnowledgePointCreate, KnowledgePointUpdate
 
 router = APIRouter(
     prefix="/knowledge-points",
@@ -26,6 +26,7 @@ def read_knowledge_points(
     skip: int = 0,
     limit: int = 100,
     category: Optional[str] = None,
+    category_search: Optional[str] = None,
     status: Optional[str] = None,
     search: Optional[str] = None,
     starred: Optional[bool] = None,
@@ -38,6 +39,8 @@ def read_knowledge_points(
     
     if category:
         query = query.filter(KnowledgePoint.category == category)
+    if category_search:
+        query = query.filter(KnowledgePoint.category.contains(category_search))
     if status:
         query = query.filter(KnowledgePoint.status == status)
     if search:

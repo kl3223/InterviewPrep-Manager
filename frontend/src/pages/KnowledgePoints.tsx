@@ -4,10 +4,9 @@ import { PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined, StarOutline
 import MarkdownEditor from '@uiw/react-markdown-editor';
 import ReactMarkdown from 'react-markdown';
 import { knowledgePointApi } from '../services/api';
-import { KnowledgePoint, KnowledgePointCreate, KnowledgePointUpdate } from '../types';
+import { KnowledgePoint } from '../types';
 
 const { Option } = Select;
-const { TextArea } = Input;
 
 const KnowledgePoints: React.FC = () => {
   const [points, setPoints] = useState<KnowledgePoint[]>([]);
@@ -17,6 +16,7 @@ const KnowledgePoints: React.FC = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [currentPoint, setCurrentPoint] = useState<KnowledgePoint | null>(null);
   const [searchText, setSearchText] = useState('');
+  const [categorySearchText, setCategorySearchText] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('');
   const [showStarredOnly, setShowStarredOnly] = useState(false);
@@ -26,13 +26,14 @@ const KnowledgePoints: React.FC = () => {
 
   useEffect(() => {
     fetchPoints();
-  }, [searchText, selectedCategory, selectedStatus, showStarredOnly]);
+  }, [searchText, categorySearchText, selectedCategory, selectedStatus, showStarredOnly]);
 
   const fetchPoints = async () => {
     setLoading(true);
     try {
       const params: any = {};
       if (searchText) params.search = searchText;
+      if (categorySearchText) params.category_search = categorySearchText;
       if (selectedCategory) params.category = selectedCategory;
       if (selectedStatus) params.status = selectedStatus;
       if (showStarredOnly) params.starred = true;
@@ -191,6 +192,13 @@ const KnowledgePoints: React.FC = () => {
           onChange={(e) => setSearchText(e.target.value)}
           style={{ width: 200 }}
         />
+        <Input
+          placeholder="搜索分类"
+          prefix={<SearchOutlined />}
+          value={categorySearchText}
+          onChange={(e) => setCategorySearchText(e.target.value)}
+          style={{ width: 150 }}
+        />
         <Select
           placeholder="选择分类"
           value={selectedCategory}
@@ -304,7 +312,7 @@ const KnowledgePoints: React.FC = () => {
             <MarkdownEditor
               value={form.getFieldValue('content') || ''}
               onChange={(value) => form.setFieldValue('content', value || '')}
-              height={300}
+              height="300px"
               style={{ borderRadius: 4, border: '1px solid #d9d9d9' }}
             />
           </Form.Item>

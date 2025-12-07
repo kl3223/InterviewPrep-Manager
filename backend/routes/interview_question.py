@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from typing import List, Optional
-from ..database import get_db
-from ..models import InterviewQuestion
-from ..schemas import InterviewQuestion as InterviewQuestionSchema, InterviewQuestionCreate, InterviewQuestionUpdate
+from backend.database import get_db
+from backend.models import InterviewQuestion
+from backend.schemas import InterviewQuestion as InterviewQuestionSchema, InterviewQuestionCreate, InterviewQuestionUpdate
 
 router = APIRouter(
     prefix="/interview-questions",
@@ -26,6 +26,7 @@ def read_interview_questions(
     skip: int = 0,
     limit: int = 100,
     category: Optional[str] = None,
+    category_search: Optional[str] = None,
     status: Optional[str] = None,
     search: Optional[str] = None,
     tag: Optional[str] = None,
@@ -38,6 +39,8 @@ def read_interview_questions(
     
     if category:
         query = query.filter(InterviewQuestion.category == category)
+    if category_search:
+        query = query.filter(InterviewQuestion.category.contains(category_search))
     if status:
         query = query.filter(InterviewQuestion.status == status)
     if search:

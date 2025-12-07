@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from typing import List, Optional
-from ..database import get_db
-from ..models import CodingQuestion
-from ..schemas import CodingQuestion as CodingQuestionSchema, CodingQuestionCreate, CodingQuestionUpdate
+from backend.database import get_db
+from backend.models import CodingQuestion
+from backend.schemas import CodingQuestion as CodingQuestionSchema, CodingQuestionCreate, CodingQuestionUpdate
 
 router = APIRouter(
     prefix="/coding-questions",
@@ -26,6 +26,7 @@ def read_coding_questions(
     skip: int = 0,
     limit: int = 100,
     category: Optional[str] = None,
+    category_search: Optional[str] = None,
     status: Optional[str] = None,
     search: Optional[str] = None,
     db: Session = Depends(get_db)
@@ -37,6 +38,8 @@ def read_coding_questions(
     
     if category:
         query = query.filter(CodingQuestion.category == category)
+    if category_search:
+        query = query.filter(CodingQuestion.category.contains(category_search))
     if status:
         query = query.filter(CodingQuestion.status == status)
     if search:

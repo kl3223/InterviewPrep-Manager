@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Table, Button, Modal, Form, Input, Select, Tag, Space, message } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined } from '@ant-design/icons';
 import { interviewQuestionApi } from '../services/api';
-import { InterviewQuestion, InterviewQuestionCreate, InterviewQuestionUpdate } from '../types';
+import { InterviewQuestion } from '../types';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -15,21 +15,24 @@ const InterviewQuestions: React.FC = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState<InterviewQuestion | null>(null);
   const [searchText, setSearchText] = useState('');
+  const [categorySearchText, setCategorySearchText] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('');
+  
 
   // 状态选项
   const statusOptions = ['未学', '已掌握', '需要复习', '重要'];
 
   useEffect(() => {
     fetchQuestions();
-  }, [searchText, selectedCategory, selectedStatus]);
+  }, [searchText, categorySearchText, selectedCategory, selectedStatus]);
 
   const fetchQuestions = async () => {
     setLoading(true);
     try {
       const params: any = {};
       if (searchText) params.search = searchText;
+      if (categorySearchText) params.category_search = categorySearchText;
       if (selectedCategory) params.category = selectedCategory;
       if (selectedStatus) params.status = selectedStatus;
       
@@ -171,6 +174,13 @@ const InterviewQuestions: React.FC = () => {
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
           style={{ width: 200 }}
+        />
+        <Input
+          placeholder="搜索分类"
+          prefix={<SearchOutlined />}
+          value={categorySearchText}
+          onChange={(e) => setCategorySearchText(e.target.value)}
+          style={{ width: 150 }}
         />
         <Select
           placeholder="选择分类"
